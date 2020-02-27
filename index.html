@@ -828,8 +828,6 @@
   }
 
   .svg-container {
-    width: 320px;
-    height: 320px;
     margin: auto;
     margin-bottom: 30px;
   }
@@ -1427,32 +1425,39 @@
   
         //CHANGE HERE:
         var focusAreaOrder = [
-        "advanced project management",
-        "carbon capture",
-        "new cement",
-        "water management",
-        "predictive maintenance",
-        "operations intelligence"
-        ];
+        "exploration",
+        "build",
+        "asset health",
+        "optimisation",
+        "automation",
+        "safety",
+        "local resources",
+        "decarbonisation",
+        "circular economy",
+        "supply",
+        "construction",
+        "specialist services"
+      ];
   
         //CHANGE HERE:
         var themeOrder = [
-        "Executional Excellence",
-        "Sustainable Leadership",
-        "Smart, Autonomous Operations"
-        ];
+        "Asset Lifecycle", "Productivity", "Sustainability", "Customer Solutions"]
   
         d3.csv(
-          "https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1229685170&single=true&output=csv"
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=595532865&single=true&output=csv"
         ).then(function(data) {
           d3.csv(
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1031411244&single=true&output=csv"
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1133714981&single=true&output=csv"
           ).then(function(desc) {
 
-            d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1007750529&single=true&output=csv"
+            d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1261734015&single=true&output=csv"
             ).then(function(hero_data) { 
+
+              
   
               d3.json("assets/world_countries.json").then(function(json) {
+
+                
   
   
               json.features.push({"type": "features", "properties": {"name": "Singapore"}, "geometry": {"type": "Polygon", "coordinates": [[0, 0]]}})
@@ -1511,7 +1516,7 @@
   
                 startup_list = [];
                 data.forEach(function(w) {
-                  if (w.Location === d.properties.name) {
+                  if (w.Country === d.properties.name) {
                     var obj = {
                       Startup: w.Startup,
                       Funding: w["Total funding (US$)"],
@@ -1571,6 +1576,8 @@
                             .select(selection)
                             .node()
                             .getBoundingClientRect().height + 40
+
+                        d3.select(".svg-container").style("width", tmp_width + "px").style("height", tmp_height + "px")
         
                         var tmp_svg = d3
                           .select(".svg-container")
@@ -1579,28 +1586,52 @@
                           .attr("height", tmp_height);
 
                           if (i === 0) {
-                            var hor = tmp_width - 310
-                            var ver = tmp_height + 25;
+                            var hor = tmp_width - 170
+                            var ver = tmp_height + 45;
                           }
                           if (i === 1) {
-                            var hor = tmp_width - 370;
-                            var ver = tmp_height - 175;
+                            var hor = tmp_width - 300;
+                            var ver = tmp_height + 20;
                           }
                           if (i === 2) {
-                            var hor = tmp_width - 290;
-                            var ver = tmp_height - 340;
+                            var hor = tmp_width - 340;
+                            var ver = tmp_height - 10;
                           }
                           if (i === 3) {
-                            var hor = tmp_width - 15;
-                            var ver = tmp_height - 330;
-                          }
-                          if (i === 4) {
-                            var hor = tmp_width + 45;
+                            var hor = tmp_width - 335;
                             var ver = tmp_height - 170;
                           }
+                          if (i === 4) {
+                            var hor = tmp_width - 290;
+                            var ver = tmp_height - 290;
+                          }
                           if (i === 5) {
+                            var hor = tmp_width - 170;
+                            var ver = tmp_height - 330;
+                          }
+                          if (i === 6) {
                             var hor = tmp_width - 15;
+                            var ver = tmp_height - 340;
+                          }
+                          if (i === 7) {
+                            var hor = tmp_width + 20;
+                            var ver = tmp_height - 290;
+                          }
+                          if (i === 8) {
+                            var hor = tmp_width + 40;
+                            var ver = tmp_height - 170;
+                          }
+                          if (i === 9) {
+                            var hor = tmp_width + 45;
+                            var ver = tmp_height - 15;
+                          }
+                          if (i === 10) {
+                            var hor = tmp_width + 15;
                             var ver = tmp_height + 25;
+                          }
+                          if (i === 11) {
+                            var hor = tmp_width - 25;
+                            var ver = tmp_height + 45;
                           }
 
                           var tmp_chartSVG = tmp_svg
@@ -1696,7 +1727,7 @@
                             });
                           }
 
-                                            var tmpSegmentsLabelBand = tmp_chartSVG
+                                                       var tmpSegmentsLabelBand = tmp_chartSVG
                     .selectAll("path.segment-band")
                     .data([chartPieData[i]])
                     .enter()
@@ -1913,12 +1944,15 @@
                   d3.select("#most-pop-tech").html(popup_data[0]["Popular Technology + Business Model"])
                   d3.select("#pattern-recognized").html(popup_data[0]["Pattern Recognised"])
                   
+
                   heroPopupData = []
                   hero_data.forEach(function(v) {
+  
                       if (v["Opportunity Space"].toLowerCase() === opp_space) {
                         heroPopupData.push(v)
                       }
                   })
+                  console.log(heroPopupData)
                   heroPopupData.forEach(function(v, i) {
                       if (v.Name !== "COMPETITOR") {
                         d3.select("#hs-" + i).style("display", "")
@@ -2005,7 +2039,7 @@
 
                 bar_data = [];
                 data.forEach(function(w) {
-                    if (w.Location === d.properties.name) {
+                    if (w.Country === d.properties.name) {
                         var obj = {
                             Startup: w.Startup,
                             Funding: w["Total funding (US$)"],
@@ -2047,17 +2081,21 @@
                   return d.properties.name;
                 })
                 .entries(json.features);
+
+                console.log('json_country', json_country)
   
                 
   
               data.forEach(function(v) {
                 //console.log(v["Country"]);
                 json.features.forEach(function(w) {
-                  if (v["Location"] === w.properties.name) {
+                  if (v["Country"] === w.properties.name) {
                     v.json_country = w.properties.name;
                   }
                 });
               });
+
+              console.log(json.features)
   
               var countries = leftG
                 .selectAll(".country")
@@ -2074,9 +2112,10 @@
               json.features.forEach(function(w) {
                 w.properties.startups = 0;
                 data.forEach(function(v) {
-                  if (v["Location"] === w.properties.name) {
+                  if (v["Country"] === w.properties.name) {
                     v.json_country = w.properties.name;
                     w.properties.startups += 1;
+                    console.log(v)
                   }
                 });
               });
@@ -2084,6 +2123,8 @@
               var max_country = d3.max(json.features, function(w) {
                   return w.properties.startups
               })
+
+              console.log(max_country)
   
   
               var countryCircleScale = d3.scaleSqrt()
@@ -2091,7 +2132,7 @@
               .range([2.6, 30]);
   
               leftG
-                .selectAll("circlce")
+                .selectAll("circle")
                 .data(json.features)
                 .enter()
                 .append("circle")
@@ -3952,9 +3993,14 @@
                     .range([bar_height-50, 100])
                     .domain([0, maxVal])
 
+                    var maxTicks = maxVal
+                    if (maxVal > 30) {
+                      maxTicks = maxVal / 2
+                    }
+
                     barSVG.append("g")
                     .attr("transform", "translate(50,0)")
-                    .call(d3.axisLeft(y).ticks(maxVal).tickSize(-bar_width+100));
+                    .call(d3.axisLeft(y).ticks(maxTicks).tickSize(-bar_width+100));
 
                     var bars = barSVG.selectAll(".bar")
                     .data(fundHist)
@@ -4052,9 +4098,14 @@
                   .range([bar_height-50, 50])
                   .domain([0, maxVal]);
 
+                  var maxTicks = maxVal
+                  if (maxVal > 30) {
+                    maxTicks = maxVal / 2
+                  }
+
                   barSVG.append("g")
                   .attr("transform", "translate(50,0)")
-                  .call(d3.axisLeft(y).ticks(maxVal).tickSize(-bar_width+100));
+                  .call(d3.axisLeft(y).ticks(maxTicks).tickSize(-bar_width+100));
 
                   var bars = barSVG.selectAll(".bar")
                   .data(yearHist)
@@ -4805,29 +4856,53 @@
                     .attr("height", tmp_height);
   
                     if (i === 0) {
-                        var hor = tmp_width - 300;
+                        var hor = tmp_width - 200;
                         var ver = tmp_height - 0;
                       }
-                          if (i === 1) {
-                            var hor = tmp_width - 370;
-                            var ver = tmp_height - 195;
-                          }
-                          if (i === 2) {
-                            var hor = tmp_width - 310;
-                            var ver = tmp_height - 370;
-                          }
-                          if (i === 3) {
-                            var hor = tmp_width - 45;
-                            var ver = tmp_height - 360;
-                          }
-                          if (i === 4) {
-                            var hor = tmp_width + 15;
-                            var ver = tmp_height - 200;
-                          }
-                          if (i === 5) {
-                            var hor = tmp_width - 45;
-                            var ver = tmp_height - 5;
-                          }
+                      if (i === 1) {
+                        var hor = tmp_width - 300;
+                        var ver = tmp_height - 25;
+                      }
+                      if (i === 2) {
+                        var hor = tmp_width - 350;
+                        var ver = tmp_height - 50;
+                      }
+                      if (i === 3) {
+                        var hor = tmp_width - 350;
+                        var ver = tmp_height - 200;
+                      }
+                      if (i === 4) {
+                        var hor = tmp_width - 300;
+                        var ver = tmp_height - 325;
+                      }
+                      if (i === 5) {
+                        var hor = tmp_width - 200;
+                        var ver = tmp_height - 375;
+                      }
+                      if (i === 6) {
+                        var hor = tmp_width - 75;
+                        var ver = tmp_height - 375;
+                      }
+                      if (i === 7) {
+                        var hor = tmp_width - 25;
+                        var ver = tmp_height - 325;
+                      }
+                      if (i === 8) {
+                        var hor = tmp_width - 0;
+                        var ver = tmp_height - 200;
+                      }
+                      if (i === 9) {
+                        var hor = tmp_width - 25;
+                        var ver = tmp_height - 75;
+                      }
+                      if (i === 10) {
+                        var hor = tmp_width - 25;
+                        var ver = tmp_height - 25;
+                      }
+                      if (i === 11) {
+                        var hor = tmp_width - 25;
+                        var ver = tmp_height - 25;
+                      }
   
                   var tmp_chartSVG = tmp_svg
                     .append("g")
