@@ -1315,7 +1315,7 @@
           filter = 0,
           filterKey = "",
           industryFilter = "All Startups",
-          logoPath = "assets/FLSmidth.png",
+          logoPath = "",
           titleLogoWidth = 80,
           titleLogoHeight = 50,
           hoverOn = 0;
@@ -1389,7 +1389,7 @@
         var chartTitle = chartSVG
           .append("text")
           .attr("class", "chart-title")
-          .text("FLSmidth Technology Radar")
+          .text("Compass")
           .attr("y", (-height * 4.55) / 10);
   
         var leftProjection = d3
@@ -1909,6 +1909,9 @@
                   d3.select("#total-no-startups").html(numStartups)
                   d3.select("#total-avg-funding").html("$" + formatFunding(funding_amount) + ", $" + formatFunding(avgFunding))
                   d3.select("#avg-funding-year").html(avgYear + ", " + maturityMode[0] )
+                  d3.select("#most-active-competitor").html(popup_data[0]["Most Active Competitor"])
+                  d3.select("#most-pop-tech").html(popup_data[0]["Popular Technology + Business Model"])
+                  d3.select("#pattern-recognized").html(popup_data[0]["Pattern Recognised"])
                   
                   heroPopupData = []
                   hero_data.forEach(function(v) {
@@ -2146,6 +2149,9 @@
                   d["Themes"] = v["Themes"];
                   d["Theme Definition"] = v["Theme Definition"];
                   d["Opportunity Space Description"] = v["Description"]
+                  d["Most Active Competitor"] = v["Most Active Competitor"]
+                  d["Popular Technology + Business Model"] = v["Popular Technology + Business Model"]
+                  d["Pattern Recognised"] = v["Pattern Recognised"]
                 }
               });
             });
@@ -4799,7 +4805,7 @@
                     .attr("height", tmp_height);
   
                     if (i === 0) {
-                        var hor = tmp_width - 200;
+                        var hor = tmp_width - 300;
                         var ver = tmp_height - 0;
                       }
                           if (i === 1) {
