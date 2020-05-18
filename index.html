@@ -4,14 +4,20 @@
   <head>
     <meta charset="utf-8" />
     <title>Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
         <script
       src="https://kit.fontawesome.com/ea2379d57d.js"
       crossorigin="anonymous"
     ></script>
+
+
+<!-- Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <link rel="icon" href="assets/favicon.ico">
     <style type="text/css">
       body {
@@ -20,6 +26,13 @@
         grid-template-rows: 300px 120px 400px;
         grid-gap: 0.1em;
         margin: auto;
+      }
+
+      #db-container {
+        grid-column: 2 / span 3;
+        grid-row: 1 / span 3;
+        padding: 5px;    
+        display: none;   
       }
 
       #chart-container {
@@ -98,7 +111,16 @@
         font-family: "Graphik Bold";
       }
 
-      .labels-theme-text {
+      .opp-space-label-text {
+        fill: white;
+        text-anchor: middle;
+        font-weight: bold;
+        font-size: 10px;
+        font-family: "Graphik Bold";
+      }
+
+
+      .theme-label-text {
         fill: white;
         text-anchor: middle;
         font-weight: bold;
@@ -216,7 +238,7 @@
       }
 
       #switch-button:hover {
-        background-color: #132A54;
+        background-color: #8ED1A1;
       }
 
       #switch-button-label {
@@ -290,7 +312,7 @@
 
       /* Change the background color of the dropdown button when the dropdown content is shown */
       .dropdown-industry:hover .dropbtn {
-        background-color: #132A54;
+        background-color: #8ED1A1;
       }
 
       .switch-button {
@@ -322,7 +344,7 @@
 
       #map-button:hover,
       #save-button:hover {
-        background-color: #132A54;
+        background-color: #8ED1A1;
       }
 
       .switch {
@@ -585,7 +607,7 @@
       }
 
       #chart-button:hover {
-        background-color: #132A54;
+        background-color: #8ED1A1;
       }
 
       .map-tooltip {
@@ -1065,7 +1087,7 @@
 
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown-bar-chart:hover .dropbtn-b {
-    background-color: #132A54;
+    background-color: #8ED1A1;
   }
 
   .svg-bar-container {
@@ -1082,8 +1104,8 @@
   }
 
   .map-container {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 2;
+    grid-column: 2 / span 3;
+    grid-row: 1 / span 3;
   }
 
   .tick > line {
@@ -1091,6 +1113,267 @@
     stroke-opacity: 1;
     shape-rendering: crispEdges;
   }
+
+  /* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.db-row-1 {
+  height: 40px;
+  margin-top: 0px;
+  padding: 40px;
+}
+
+.db-row-2 {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.db-column-1 {
+  width: 230px;
+  position: relative;
+  display: inline-block;
+  float: left;
+}
+
+.db-column-2 {
+  width: 870px;
+  position: relative;
+  display: inline-block;
+}
+
+.db-tr {
+}
+
+
+.db-entry {
+  width: 250px;
+  height: 300px;
+  display: inline-block;
+  margin: 20px;
+    box-shadow: 0 4px 12px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  overflow: hidden;
+  
+}
+
+.db-startup- {
+    position: relative;
+    background-color: #fff;
+    color: #1f2430;
+    width: 100%;
+    height: 100%;
+}
+
+.db-entry:hover {
+  box-shadow: 0 4px 12px 0px rgba(0, 0, 0, 0.25);
+}
+
+.db-filter {
+  font-family: "Graphik Bold";
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+.db-filter-close {
+  border: 0px;
+  margin-left: 10px;
+}
+
+.db-filter-title {
+  margin-bottom: 10px;
+}
+
+.container {
+  font-family: "Graphik Regular";
+  font-size: 14px;
+}
+
+.db-column-2-header {
+    font-family: "Graphik Bold";
+    margin-left: 20px;
+}
+
+.db-startup-logo {
+  width: 90px;
+  margin: 20px;
+}
+
+.db-startup-info-container {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  
+}
+
+.db-startup-title {
+    font-size: 18px;
+    font-family: "Graphik Bold";
+}
+
+.db-startup-desc {
+    font-family: "Graphik Regular";
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.search-bar {
+  width: 1060px;
+  padding: 10px;
+}
+
+.db-startup-container {
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.db-bg {
+    background-color: black;
+    opacity: 0.3;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.db-startup {
+  width: 900px;
+  height: 600px;
+  background-color: white;
+  opacity: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.db-startup-close {
+  top: 20px;
+  position: relative;
+  left: 860px;
+  cursor: pointer;
+}
+
+.db-entry-title {
+  font-size: 24px;
+    font-family: "Graphik Bold";
+}
+
+.db-startup-row-1 {
+      padding: 20px;
+      margin-bottom: 30px;
+}
+
+
+.db-startup-col-0 {
+    position: relative;
+    display: inline-block;
+    width: 400px;
+    top: 0px;
+}
+
+.db-startup-col-1 {
+  vertical-align: top;
+margin-left: 70px;
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    width: 400px;
+}
+
+.db-entry-desc {
+line-height: 1.4em;
+    font-family: "Graphik Regular";
+    margin-left: 20px;
+}
+
+.db-entry-item {
+
+}
+
+.db-entry-item-left {
+    display: inline;
+    line-height: 1.4em;
+    font-family: "Graphik Regular";
+}
+
+.db-entry-item-right {
+    line-height: 1.4em;
+    float: right;
+    font-family: "Graphik Bold";
+}
 
 
     </style>
@@ -1277,13 +1560,18 @@
         <div id="radar-toggle-btn" class="left-sidebar-btn">
         <div class="left-sidebar-btn-label">Radar</div>
         <i class="fas fa-bullseye fa-lg"></i>
-        
         </div>
+
+        <div id="db-toggle-btn" class="left-sidebar-btn">
+        <div class="left-sidebar-btn-label">Database</div>
+        <i class="fas fa-database fa-lg"></i>
+        </div>
+
         <div id="map-toggle-btn" class="left-sidebar-btn">
         <div class="left-sidebar-btn-label">Map</div>
         <i class="far fa-map fa-lg"></i>
-        
         </div>
+
       </div>
     </div>
 
@@ -1328,7 +1616,73 @@
         </div>
       </div>
     </div>
+    </div>
+    <div id="db-container">
+      <div class="db-row-1">
+         <select class="search-bar">
+          <option></option>
+         </select>
+      </div>
+      <div class="db-row-2">
+        <div class="db-column-1">
+
+        </div>
+        <div class="db-column-2">
+          <div class="db-column-2-header">Showing: X filtered startups</div>
+          <div class="db-content">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+     <div class="db-startup-container">
+      <div class="db-bg"></div>
+      <div class="db-startup">
+        <div class="db-startup-row-0">
+          <div class="db-startup-close">
+            <i class="fas fa-times fa-lg"></i>
+          </div>
+        </div>
+        <div class="db-startup-row-1">
+          <div class="db-entry-title">Example Title</div>
+        </div>
+        <div class="db-startup-row-2">
+          <div class="db-startup-col-0">
+            <div class="db-entry-desc">An example description of a business. An example description of a business. An example description of a business. An example description of a business.</div>
+          </div>
+          <div class="db-startup-col-1">
+            <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-location">Location</div>
+              <div class="db-entry-item-right db-entry-location-value">Cape Town</div>
+            </div>
+            <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-website">Website</div>
+              <div class="db-entry-item-right db-entry-website-value">Cape Town</div>
+            </div>
+            <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-founded">Founded</div>
+              <div class="db-entry-item-right db-entry-founded-value">Cape Town</div>
+            </div>
+            <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-funding">Funding</div>
+              <div class="db-entry-item-right db-entry-funding-value">Cape Town</div>
+            </div>
+            <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-maturity">Maturity</div>
+              <div class="db-entry-item-right db-entry-maturity-value">Cape Town</div>
+            </div>
+              <div class="db-entry-item">
+              <div class="db-entry-item-left db-entry-industry">Industry</div>
+              <div class="db-entry-item-right db-entry-industry-value">Cape Town</div>
+            </div>
+          </div>
+        </div>
+      </div>
+     </div>
+     
     <div id="tmp-container"></div>
+   
 
 
 
@@ -1356,6 +1710,27 @@
           bar_width = 900,
           bar_height = 460,
           popupMode = {"page": "none", "type": "none"};
+
+    var categoryFontObject = [
+      { name: 'themeFont',
+        dy_upper: "-1.15em",
+        dy_lower: "1.85em"
+      },
+      {
+        fontSize: "30px",
+        letterSpacing: "5px",
+        letterSpaceVal: 5,
+        dy_upper: "-1.05em",
+        dy_lower: "1.8em"
+      },
+      {
+        fontSize: "24px",
+        letterSpacing: "4px",
+        letterSpaceVal: 4,
+        dy_upper: "-1.25em",
+        dy_lower: "2em"
+      }
+    ];
 
             // loader settings
           var opts = {
@@ -1402,6 +1777,7 @@
               d3.select(this).style("background-color", "#8e8e8e")
             }
           }) */
+
   
         var svg = d3
           .select("#chart-container")
@@ -1438,10 +1814,10 @@
         var chartTitle = chartSVG
           .append("text")
           .attr("class", "chart-title")
-          .text("Compass")
+          .text("Compass Demo – Mining & Cement")
           .attr("y", (-height * 4.55) / 10)
           .style("display", "none")
-  
+
         var leftProjection = d3
           .geoMercator()
           .translate([leftWidth / 2, leftHeight / 2])
@@ -1459,6 +1835,8 @@
           .attr("fill", "#CBCBCB")
           .attr("width", leftWidth)
           .attr("height", leftHeight);
+  
+
   
         d3.select(".map-container").style("display", "none")
         d3.select(".map-tooltip").style("display", "none")
@@ -1506,29 +1884,226 @@
             d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSafGm_gSEK_M6dTEcS3sd2N7CcehHPfg561BJtgzrHClIt5DH79yqHI1LpeOLbbwGob_Xi0kVUdxMB/pub?gid=1261734015&single=true&output=csv"
             ).then(function(hero_data) { 
 
-                            spinner.stop();
+            d3.json("assets/world_countries.json").then(function(json) {
+
+              data = data.filter(function(d) {
+                return +d["Founded"] > 2004
+              })
+
+            data = data.filter(function(d) {
+              return d["Opportunity Space"] !== "";
+            });
+  
+            data = data.filter(function(d) {
+              return d["Founded"] !== "";
+            });
+  
+  
+            // correct formatting of total funding values to numbers
+            data.forEach(function(d) {
+              d["Total funding (US$)"] = d["Total funding (US$)"].replace(
+                /,/g,
+                ""
+              );
+              if (d["Total funding (US$)"] === "" || d["Total funding (US$)"] === "Unfunded" || d["Total funding (US$)"] === "Funded") {
+                d["Total funding (US$)"] = 0;
+              }
+  
+              d["Total funding (US$)"] = (d["Total funding (US$)"])
+  
+              d["Opportunity Space"] = d["Opportunity Space"]
+                .toLowerCase()
+                .replace(/\//g, "_");
+  
+              desc.forEach(function(v) {
+                if (
+                  d["Opportunity Space"] ===
+                  v["Opportunity Space"].toLowerCase().replace(/\//g, "_")
+                ) {
+                  d["Themes"] = v["Themes"];
+                  d["Theme Definition"] = v["Theme Definition"];
+                  d["Opportunity Space Description"] = v["Description"]
+                  d["Most Active Competitor"] = v["Most Active Competitor"]
+                  d["Popular Technology + Business Model"] = v["Popular Technology + Business Model"]
+                  d["Pattern Recognised"] = v["Pattern Recognised"]
+                }
+              });
+            });
+
+              spinner.stop();
+
+              d3.select(".search-bar").selectAll("option")
+                .data(data.sort(function(a, b) {
+                  return d3.ascending(a.Startup, b.Startup)
+                }))
+                .enter()
+                .append("option")
+                .text(function(d) {
+                  return d.Startup
+                })
+                
 
               d3.select("#button-16").style("display", "block")
               d3.select(".dropdown-industry").style("display", "inline-block")
               d3.select("#save-button").style("display", "block")
               d3.select(".chart-title").style("display", "")
 
-              
-  
-              d3.json("assets/world_countries.json").then(function(json) {
+              $(document).ready(function () {
+                $(".search-bar").select2({
+                  placeholder: 'Select a startup'
+                })
+              })
 
-                
-  
-  
+                  $(".search-bar").on("select2:select", function (e) {
+                    let selectData = e.params.data.element.__data__
+                    openStartup(selectData)
+                  });
+
               json.features.push({"type": "features", "properties": {"name": "Singapore"}, "geometry": {"type": "Polygon", "coordinates": [[0, 0]]}})
               json.features.push({"type": "features", "properties": {"name": "Bahrain"}, "geometry": {"type": "Polygon", "coordinates": [[0, 0]]}})
   
               d3.select("#radar-toggle-btn").on("click", function() {
                 d3.select("#map-toggle-btn").attr("class", "left-sidebar-btn")
+                d3.select("#db-toggle-btn").attr("class", "left-sidebar-btn")
                 d3.select("#radar-toggle-btn").attr("class", "left-sidebar-btn active")
                 d3.select("body").style("background-color", "white")
+                d3.select("#db-container").style("display", "none")
                 toggle_map("off");
               });
+
+            // setup database:
+
+            // filters:
+            var filter_Founded = d3
+              .nest()
+              .key(function(d) {
+                return d.Founded;
+              })
+              .sortKeys(function(a, b) {
+                return d3.descending(+a, +b)
+              })
+              .entries(data);
+
+            var filter_Industry = d3
+              .nest()
+              .key(function(d) {
+                return d.Industry;
+              })
+              .sortKeys(function(a, b) {
+                return d3.ascending(a, b)
+              })
+              .entries(data);
+
+            var filter_Maturity = d3
+              .nest()
+              .key(function(d) {
+                return d.Maturity;
+              })
+              .entries(data);
+
+            filter_Maturity = filter_Maturity.slice(0,3)
+
+            var filterList = [{name: "Founded", data: filter_Founded}, 
+                              {name: "Industry", data: filter_Industry},
+                              {name: "Maturity", data: filter_Maturity}]
+
+              d3.select(".db-column-1")
+                .selectAll(".db-filter")
+                .data(filterList)
+                .enter()
+                .append("div")
+                .attr("class", function(d, i) {
+                  return "db-filter db-filter-" + i
+                })
+                .append("div")
+                .attr("class", function(d, i) {
+                  return "db-filter-title db-filter-title-" + i
+                })
+                .html(function(d, i) {
+                  return d.name + "<i class='fas fa-angle-up db-filter-close db-filter-close-" + i + "'></i>"
+                })
+                .each(function(d, i) {
+                  d.data.forEach(function(v, index) {
+                    d3.select(".db-filter-" + i)
+                      .datum(v)
+                      .append("div")
+                      .attr("class", function(w) {
+                        return "db-checkbox db-checkbox-" + i + "-" + index
+                      })
+                      .html(function(w) {
+                        let checkboxhtml = "<label class='container'>" + w.key + "\n"
+                        checkboxhtml += "<input type='checkbox' checked='checked'>\n"
+                        checkboxhtml += "<span class='checkmark'></span>\n"
+                        checkboxhtml += "</label>"
+                        return checkboxhtml
+                      })
+                  })
+                })
+
+              d3.select(".db-content")
+                .selectAll(".db-entry")
+                .data(data.sort(function(a, b) {
+                  return d3.ascending(a.Startup, b.Startup)
+                }))
+                .enter()
+                .append("div")
+                .on("click", function(d) {
+                  openStartup(d)
+                })
+                .attr("class", "db-entry")
+                .append("div")
+                .attr("class", function(d, i) {
+                  return "db-startup- db-startup-" + i
+                })
+                .each(function(d, i) {
+                  /*d3.select(".db-startup-" + i)
+                    .append("div")
+                    .attr("class", "db-startup-logo-container")
+                    .append("img")
+                    .attr("class", "db-startup-logo")
+                    .attr("src", "assets/testlogo.png")*/
+
+                  d3.select(".db-startup-" + i)
+                    .append("div")
+                    .attr("class", "db-startup-info-container")
+                    .append("div")
+                    .html(function() {
+                      if (d.Startup.length > 20) {
+                        DBtitle = d.Startup.substr(0,18) + "..."
+                      } else {
+                        DBtitle = d.Startup
+                      }
+                      if (d["Business Description"].length > 300) {
+                        DBdesc = d["Business Description"].substr(0,297) + "..."
+                      } else {
+                        DBdesc = d["Business Description"]
+                      }
+                      let infoHtml = "<div class='db-startup-title'>" + DBtitle + "</div>\n"
+                      infoHtml += "<div class='db-startup-desc'>" + DBdesc + "</div>"
+                      return infoHtml
+                    })
+                })
+
+              d3.select(".db-column-2-header").text("Showing: " + data.length + " filtered startups")
+
+
+
+
+
+
+              d3.selectAll(".checkmark").on("click", function() {
+                if (d3.select(this).attr("class") === "checkmark unchecked") {
+                  d3.select(this).attr("class", "checkmark")
+                } else {
+                  d3.select(this).attr("class", "checkmark unchecked")
+                }
+                update_DB()
+              })
+
+              d3.select(".db-startup-close").on("click", function() {
+                closeStartup()
+              })
+
 
               function modeArray(array) {
                 if (array.length == 0) return null;
@@ -1555,11 +2130,11 @@
   
               function country_hover(d, i) {
                 d3.selectAll(".country-circle")
-                  .attr("fill", "#82ADBD")
-                  .attr("stroke", "#82ADBD");
+                  .attr("fill", "#C1C1C1")
+                  .attr("stroke", "#C1C1C1");
                 d3.select(this)
-                  .attr("fill", "#132A54")
-                  .attr("stroke", "#132A54");
+                  .attr("fill", "#8ED1A1")
+                  .attr("stroke", "#8ED1A1");
                 var tooltip = "<div>" + d.properties.name + "<\/div>";
                 tooltip += "<div>Startups: " + d.properties.startups + "<\/div>";
                 d3.select(".map-tooltip")
@@ -1602,6 +2177,22 @@
                 });
                 table += "<\/table>";
                 d3.select("#startup-list").html(table);
+              }
+
+              function openStartup(d) {
+                d3.select(".db-startup-container").style("display", "block")
+                d3.select(".db-entry-title").text(d.Startup)
+                d3.select(".db-entry-desc").text(d["Business Description"])
+                d3.select(".db-entry-location-value").text(d["Country"])
+                d3.select(".db-entry-website-value").html("link.")
+                d3.select(".db-entry-founded-value").text(d["Founded"])
+                d3.select(".db-entry-funding-value").text(d["Total funding (US$)"])
+                d3.select(".db-entry-maturity-value").text(d["Maturity"])
+                d3.select(".db-entry-industry-value").text(d["Industry"])
+              }
+
+              function closeStartup() {
+                d3.select(".db-startup-container").style("display", "none")
               }
 
               function update_popup(d) {
@@ -1788,94 +2379,104 @@
                             });
                           }
 
-                                                       var tmpSegmentsLabelBand = tmp_chartSVG
+                    var tmpSegmentsLabelBand = tmp_chartSVG
                     .selectAll("path.segment-band")
                     .data([chartPieData[i]])
                     .enter()
                     .append("path")
                     .classed("segment-band", true)
                     .attr("d", segmentLabelBandArc)
-                    .attr("fill", "#82ADBD")
-  
-                  var tmpLabels = tmp_chartSVG
-                    .append("g")
-                    .classed("labels", true);
-
-                  var tmpLabelsOther = tmp_chartSVG
-                    .append("g")
-                    .classed("labels", true);
-  
-                  tmpLabels
-                    .append("def")
-                    .append("path")
-                    .attr("id", "label-path")
-                    .attr(
-                      "d",
-                      "m0 " +
-                        -labelRadius +
-                        " a" +
-                        labelRadius +
-                        " " +
-                        labelRadius +
-                        " 0 1,1 -0.01 0"
-                    );
-  
-                  tmpLabelsOther
-                    .append("def")
-                    .append("path")
-                    .attr("id", "label-other-path")
-                    .attr(
-                      "d",
-                      "m0 " +
-                        -labelOtherRadius +
-                        " a" +
-                        labelOtherRadius +
-                        " " +
-                        labelOtherRadius +
-                        " 0 1,1 -0.01 0"
-                    );
-  
-                  tmpLabels
-                    .selectAll("text")
-                    .data([chartPieData[i]])
-                    .enter()
-                    .append("text")
-                    .attr("class", "label-text")
-                    .append("textPath")
-                    .attr("xlink:href", "#label-path")
-                    .attr("startOffset", function(d, i) {
-                      var percentage =
-                        ((d.endAngle - d.startAngle) / 2 + d.startAngle) /
-                        0.0628319;
-                      return percentage + "%";
+                    .attr("fill", "#C1C1C1")
+                    .attr("id", function(d) {
+                      return (
+                        d.data.value.key.toLowerCase().replace(/ /g, "-") + "-tmp-band"
+                      );
                     })
-                    .text(function(d) {
-                      return label_wrap(d.data.value.key.toUpperCase())[0];
-                    });
-  
-                  tmpLabelsOther
-                    .selectAll("text")
-                    .data([chartPieData[i]])
-                    .enter()
-                    .append("text")
-                    .attr("class", "label-text")
-                    .append("textPath")
-                    .attr("xlink:href", "#label-other-path")
-                    .attr("startOffset", function(d, i) {
-                      var percentage =
-                        ((d.endAngle - d.startAngle) / 2 + d.startAngle) /
-                        0.0628319;
-                      return percentage + "%";
-                    })
-                    .text(function(d) {
-                      var result = label_wrap(d.data.value.key.toUpperCase());
-                      if (result.length > 2) {
-                        return result[1] + " " + result[2];
-                      } else {
-                        return result[1];
+                    .each(function(d, i) {
+                      var firstArcSection = /(^.+?)L/;
+                      var newArc = firstArcSection.exec(d3.select(this).attr("d"))[1];
+                      d.newArc = newArc.replace(/,/g, " ");
+                      d.percentage =
+                        ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
+                      if (d.percentage >= 100) {
+                        d.percentage -= 100;
                       }
-                    });
+                      if (d.percentage >= 25 && d.percentage <= 75) {
+                        var startLoc = /M(.*?)A/;
+                        var middleLoc = /A(.*?)0 0 1/;
+                        var endLoc = /0 0 1 (.*?)$/;
+                        d.newStart = endLoc.exec(d.newArc)[1];
+                        d.newEnd = startLoc.exec(d.newArc)[1];
+                        d.middleSec = middleLoc.exec(d.newArc)[1];
+                        d.newArc =
+                          "M" + d.newStart + "A" + d.middleSec + "0 0 0 " + d.newEnd;
+                      }
+                      d.hiddenArc = tmp_chartSVG
+                        .append("path")
+                        .attr("class", "hiddenDonutArcs")
+                        .attr("id", function() {
+                          return (
+                            "hidden-opp-space-tmp-band-" + d.data.value.key.replace(/_/g," ")
+                          );
+                        })
+                        .attr("d", d.newArc)
+                        .style("fill", "none");
+                    })
 
+              var tmpOppSpaceLabels = tmp_chartSVG
+                .selectAll(".opp-space-label-text")
+                .data([chartPieData[i]])
+                .enter()
+                .append("g")
+                .selectAll(".test-class")
+                .data(function(d) {
+                  var limit = labelFontData.limit;
+
+                  return textWrap(
+                    d.data.value.key.toUpperCase().replace(/_/g," "),
+                    d.percentage,
+                    limit
+                  );
+                })
+                .enter()
+                .append("text")
+                .attr("class", "label opp-space-label-text")
+                .attr("dy", function(d, i) {
+                  if (d.percentage >= 25 && d.percentage <= 75) {
+                    if (d.lineLength === 1) {
+                      return "-1.1em";
+                    } else {
+                      if (i === 0) {
+                        return "-2.6em";
+                      } else {
+                        return "-1.3em";
+                      }
+                    }
+                  } else {
+                    if (d.lineLength === 1) {
+                      return "1.8em";
+                    } else {
+                      if (i === 0) {
+                        return "2.1em";
+                      } else {
+                        return "3.3em";
+                      }
+                    }
+                  }
+                })
+                .append("textPath")
+                .attr("xlink:href", function(d, i) {
+                  return (
+                    "#" +
+                    "hidden-opp-space-tmp-band-" +
+                    d.text_data.toLowerCase()
+                  );
+                })
+                .attr("startOffset", "50%")
+                .text(function(d) {
+                  return d.data
+                });
+  
                           var tmp_nodes = tmp_chartSVG
                           .selectAll("nodes")
                           .data(data)
@@ -2097,7 +2698,7 @@
                   })
               }
 
-              function country_click(d) {
+                function country_click(d) {
                 d3.select(".popup-container").attr("class", "popup-container added")
                 d3.select(".popup-bg").style("display", "")
                 d3.select(".popup-section-a").style("display", "none")
@@ -2108,10 +2709,10 @@
                 data.forEach(function(w) {
                     if (w.Country === d.properties.name) {
                         var obj = {
-                            Startup: w.Startup,
+                            "Company Name": w["Company Name"],
                             Funding: w["Total funding (US$)"],
-                            URL: w["URL"],
-                            Year: w["Founded"]
+                            Website: w["Website"],
+                            'Year Founded': w["Year Founded"]
                           };
                           bar_data.push(obj);
                     }
@@ -2124,9 +2725,7 @@
               var leftCentroids = json.features.map(function(feature) {
                 return leftPath.centroid(feature);
               });
-  
-  
-  
+
               // manual adjustments to country centroids:
               leftCentroids[6] = [499.3566464049186, 484.20930510242];
               leftCentroids[121] = [381.8299314691847, 98.47135868701795];
@@ -2153,12 +2752,7 @@
                 })
                 .entries(json.features);
 
-                console.log('json_country', json_country)
-  
-                
-  
               data.forEach(function(v) {
-                //console.log(v["Country"]);
                 json.features.forEach(function(w) {
                   if (v["Country"] === w.properties.name) {
                     v.json_country = w.properties.name;
@@ -2215,53 +2809,13 @@
                 .attr("cy", function(d, i) {
                   return leftCentroids[i][1];
                 })
-                .attr("fill", "#82ADBD")
-                .attr("stroke", "#82ADBD")
+                .attr("fill", "#C1C1C1")
+                .attr("stroke", "#C1C1C1")
                 .on("mouseover", country_hover)
                 .on("click", country_click)
   
               // END::END
   
-  
-            data = data.filter(function(d) {
-              return d["Opportunity Space"] !== "";
-            });
-  
-            data = data.filter(function(d) {
-              return d["Founded"] !== "";
-            });
-  
-  
-            // correct formatting of total funding values to numbers
-            data.forEach(function(d) {
-              d["Total funding (US$)"] = d["Total funding (US$)"].replace(
-                /,/g,
-                ""
-              );
-              if (d["Total funding (US$)"] === "" || d["Total funding (US$)"] === "Unfunded" || d["Total funding (US$)"] === "Funded") {
-                d["Total funding (US$)"] = 0;
-              }
-  
-              d["Total funding (US$)"] = (d["Total funding (US$)"])
-  
-              d["Opportunity Space"] = d["Opportunity Space"]
-                .toLowerCase()
-                .replace(/\//g, "_");
-  
-              desc.forEach(function(v) {
-                if (
-                  d["Opportunity Space"] ===
-                  v["Opportunity Space"].toLowerCase().replace(/\//g, "_")
-                ) {
-                  d["Themes"] = v["Themes"];
-                  d["Theme Definition"] = v["Theme Definition"];
-                  d["Opportunity Space Description"] = v["Description"]
-                  d["Most Active Competitor"] = v["Most Active Competitor"]
-                  d["Popular Technology + Business Model"] = v["Popular Technology + Business Model"]
-                  d["Pattern Recognised"] = v["Pattern Recognised"]
-                }
-              });
-            });
   
             /* var oppSpace_order = [
                 "end of life care",
@@ -2615,21 +3169,15 @@
               update_bar(d)
             });
   
-            var themeSegments = chartSVG
+            /*var themeSegments = chartSVG
               .selectAll("theme-segments")
               .data(outerChartPieData)
               .enter()
               .append("path")
               .attr("d", themeArc)
-              .attr("fill", "#132A54")
-              /*.attr("fill", function(d) {
-                return focusAreaeBandColorScale(
-                  d.data.value.values[0]["Opportunity Space"]
-                );
-              })
-              .style("opacity", "0.7")*/
+              .attr("fill", "#8ED1A1")
               .style("stroke", "white")
-              .style("stroke-width", "2px");
+              .style("stroke-width", "2px");*/
   
             var backgroundSegments = chartSVG
               .selectAll("background-segments")
@@ -2644,6 +3192,74 @@
               })
               .style("opacity", 0)
               .attr("d", backgroundArc);
+  
+              themeFontData = categoryFontObject[0];
+  
+            var themeSegments = chartSVG
+              .selectAll("theme-segments")
+              .data(outerChartPieData)
+              .enter()
+              .append("path")
+              .attr("d", themeArc)
+              .attr("fill", "#8ED1A1")
+              .style("stroke", "white")
+              .style("stroke-width", "2px")
+              .each(function(d, i) {
+                var firstArcSection = /(^.+?)L/;
+                var newArc = firstArcSection.exec(d3.select(this).attr("d"))[1];
+                d.newArc = newArc.replace(/,/g, " ");
+                d.percentage =
+                    ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
+                  if (d.percentage >= 100) {
+                    d.percentage -= 100;
+                  }
+                if (d.percentage >= 25 && d.percentage <= 75) {
+                  var startLoc = /M(.*?)A/;
+                  var middleLoc = /A(.*?)0 0 1/;
+                  var endLoc = /0 0 1 (.*?)$/;
+                  d.newStart = endLoc.exec(d.newArc)[1];
+                  d.newEnd = startLoc.exec(d.newArc)[1];
+                  d.middleSec = middleLoc.exec(d.newArc)[1];
+                  d.newArc =
+                    "M" + d.newStart + "A" + d.middleSec + "0 0 0 " + d.newEnd;
+                }
+                d.hiddenArc = chartSVG
+                  .append("path")
+                  .attr("class", "hiddenDonutArcs")
+                  .attr("id", function() {
+                    return (
+                      "hidden-theme-band" + d.data.key
+                    );
+                  })
+                  .attr("d", d.newArc)
+                  .style("fill", "none");
+              })
+
+              var themeLabels = chartSVG
+                .selectAll(".theme-label-text")
+                .data(outerChartPieData)
+                .enter()
+                .append("text")
+                .attr("class", "label theme-label-text")
+                .attr("dy", function(d) {
+                  if (d.percentage >= 25 && d.percentage <= 75) {
+                    return themeFontData.dy_upper;
+                  }
+                  return themeFontData.dy_lower;
+                })
+                .append("textPath")
+                .attr("xlink:href", function(d, i) {
+                  return (
+                    "#" +
+                    "hidden-theme-band" +
+                    d.data.key
+                  );
+                })
+                .attr("startOffset", "50%")
+                .text(function(d) {
+                  return d.data.value.key.toUpperCase() 
+                });
+
   
             maturity_list.forEach(function(v) {
               var tmpArc = d3
@@ -2711,6 +3327,14 @@
               .arc()
               .innerRadius(outerRadius)
               .outerRadius(outerRadius * 1.095);
+
+              oppSpaceFontData = categoryFontObject[1]
+
+            var labelWidth = (2 * outerRadius * 1.095) / chartPieData.length;
+
+              labelFontData = {
+                limit: labelWidth * 0.6
+              };
   
             var segmentsLabelBand = chartSVG
               .selectAll("path.segment-band")
@@ -2724,10 +3348,37 @@
                   d.data.value.key.toLowerCase().replace(/ /g, "-") + "-band"
                 );
               })
-              .attr("fill", "#82ADBD")
-              /* .attr("fill", function(d) {
-                return focusAreaeBandColorScale(d.data.value.key);
-              })*/
+              .attr("fill", "#C1C1C1")
+              .each(function(d, i) {
+                var firstArcSection = /(^.+?)L/;
+                var newArc = firstArcSection.exec(d3.select(this).attr("d"))[1];
+                d.newArc = newArc.replace(/,/g, " ");
+                d.percentage =
+                  ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
+                if (d.percentage >= 100) {
+                  d.percentage -= 100;
+                }
+                if (d.percentage >= 25 && d.percentage <= 75) {
+                  var startLoc = /M(.*?)A/;
+                  var middleLoc = /A(.*?)0 0 1/;
+                  var endLoc = /0 0 1 (.*?)$/;
+                  d.newStart = endLoc.exec(d.newArc)[1];
+                  d.newEnd = startLoc.exec(d.newArc)[1];
+                  d.middleSec = middleLoc.exec(d.newArc)[1];
+                  d.newArc =
+                    "M" + d.newStart + "A" + d.middleSec + "0 0 0 " + d.newEnd;
+                }
+                d.hiddenArc = chartSVG
+                  .append("path")
+                  .attr("class", "hiddenDonutArcs")
+                  .attr("id", function() {
+                    return (
+                      "hidden-opp-space-band-" + d.data.value.key.replace(/_/g," ")
+                    );
+                  })
+                  .attr("d", d.newArc)
+                  .style("fill", "none");
+              })
               .on("mouseover", function(d) {
                 labelMouseOver(d);
                 hoverInfoFunction(d);
@@ -2739,130 +3390,62 @@
               })
               .on("click", function(d) {
                   update_popup(d)
+              });
+      
+              var oppSpaceLabels = chartSVG
+                .selectAll(".opp-space-label-text")
+                .data(chartPieData)
+                .enter()
+                .append("g")
+                .selectAll(".test-class")
+                .data(function(d) {
+                  var limit = labelFontData.limit;
 
-                /* if (filterKey === d.data.value.key) {
-                  filterKey = "";
-                  updateNodes("focus area", filterKey);
-                  d3.selectAll(".label-mouse-over-text-clicked").remove();
-                  d3.selectAll(".hover-svg-background-clicked").remove();
-                } else {
-                  filterKey = d.data.value.key;
-                  updateNodes("focus area", filterKey);
-                  hoverInfoFunction(d, "-clicked");
-                } */
-              });
-  
-            var labelRadius = outerRadius * 1.055;
-            var labelOtherRadius = outerRadius * 1.02;
-  
-            var labels = chartSVG.append("g").classed("labels", true);
-            var labelsOther = chartSVG.append("g").classed("labels", true);
-  
-            labels
-              .append("def")
-              .append("path")
-              .attr("id", "label-path")
-              .attr(
-                "d",
-                "m0 " +
-                  -labelRadius +
-                  " a" +
-                  labelRadius +
-                  " " +
-                  labelRadius +
-                  " 0 1,1 -0.01 0"
-              );
-  
-            labelsOther
-              .append("def")
-              .append("path")
-              .attr("id", "label-other-path")
-              .attr(
-                "d",
-                "m0 " +
-                  -labelOtherRadius +
-                  " a" +
-                  labelOtherRadius +
-                  " " +
-                  labelOtherRadius +
-                  " 0 1,1 -0.01 0"
-              );
-  
-            labels
-              .selectAll("text")
-              .data(chartPieData)
-              .enter()
-              .append("text")
-              .attr("class", "label-text")
-              .append("textPath")
-              .attr("xlink:href", "#label-path")
-              .attr("startOffset", function(d, i) {
-                var percentage =
-                  ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
-                return percentage + "%";
-              })
-              .text(function(d) {
-                return label_wrap(d.data.value.key.toUpperCase())[0];
-              });
-  
-            labelsOther
-              .selectAll("text")
-              .data(chartPieData)
-              .enter()
-              .append("text")
-              .attr("class", "label-text")
-              .append("textPath")
-              .attr("xlink:href", "#label-other-path")
-              .attr("startOffset", function(d, i) {
-                var percentage =
-                  ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
-                return percentage + "%";
-              })
-              .text(function(d) {
-                var result = label_wrap(d.data.value.key.toUpperCase());
-                if (result.length > 2) {
-                  return result[1] + " " + result[2];
-                } else {
-                  return result[1];
-                }
-              });
-  
-            var labelThemeRadius = outerRadius + 40;
-  
-            var labelsTheme = chartSVG.append("g").classed("labels-theme", true);
-  
-            labelsTheme
-              .append("def")
-              .append("path")
-              .attr("id", "labels-theme-path")
-              .attr(
-                "d",
-                "m0 " +
-                  -labelThemeRadius +
-                  " a" +
-                  labelThemeRadius +
-                  " " +
-                  labelThemeRadius +
-                  " 0 1,1 -0.01 0"
-              );
-  
-            labelsTheme
-              .selectAll("text")
-              .data(outerChartPieData)
-              .enter()
-              .append("text")
-              .attr("class", "labels-theme-text")
-              .append("textPath")
-              .attr("xlink:href", "#labels-theme-path")
-              .attr("startOffset", function(d, i) {
-                var percentage =
-                  ((d.endAngle - d.startAngle) / 2 + d.startAngle) / 0.0628319;
-                return percentage + "%";
-              })
-              .text(function(d) {
-                return d.data.value.key.toUpperCase();
-              });
-  
+                  return textWrap(
+                    d.data.value.key.toUpperCase().replace(/_/g," "),
+                    d.percentage,
+                    limit
+                  );
+                })
+                .enter()
+                .append("text")
+                .attr("class", "label opp-space-label-text")
+                .attr("dy", function(d, i) {
+                  if (d.percentage >= 25 && d.percentage <= 75) {
+                    if (d.lineLength === 1) {
+                      return "-1.1em";
+                    } else {
+                      if (i === 0) {
+                        return "-2.6em";
+                      } else {
+                        return "-1.3em";
+                      }
+                    }
+                  } else {
+                    if (d.lineLength === 1) {
+                      return "1.8em";
+                    } else {
+                      if (i === 0) {
+                        return "2.1em";
+                      } else {
+                        return "3.3em";
+                      }
+                    }
+                  }
+                })
+                .append("textPath")
+                .attr("xlink:href", function(d, i) {
+                  return (
+                    "#" +
+                    "hidden-opp-space-band-" +
+                    d.text_data.toLowerCase()
+                  );
+                })
+                .attr("startOffset", "50%")
+                .text(function(d) {
+                  return d.data
+                });
+
             /* var key = keySVG
                 .selectAll("g.key")
                 .data(fundingAmount)
@@ -3741,6 +4324,63 @@
                 });
               }
             }
+
+                        function textWrap(text_data, percentage, limit = 6) {
+              result = [];
+              if (text_data.length > limit) {
+                if (text_data.length >= (limit -1)* 2) {
+                    a = text_data.substr(0, limit).lastIndexOf(" ")
+                    y = text_data.substr(0, a)
+                    a_rem = text_data.substr(a + 1)
+                    b = a_rem.substr(0, limit).lastIndexOf(" ")
+                    z = a_rem.substr(0, b)
+                    result.push({
+                      data: y,
+                      text_data: text_data,
+                      percentage: percentage,
+                      lineLength: 2
+                    });
+                    result.push({
+                      data: z + "...",
+                      text_data: text_data,
+                      percentage: percentage,
+                      lineLength: 2
+                    });
+                } else {
+                var tmp_limit = text_data.length / 2 - 4;
+                var lines = dummy(text_data, tmp_limit);
+
+                lines.forEach(function(d) {
+                  if (d.length > 1) {
+                    d = d.join(" ");
+                  }
+                  if (d !== "") {
+                    result.push({
+                      data: d,
+                      text_data: text_data,
+                      percentage: percentage,
+                      lineLength: lines.length
+                    });
+                  }
+                });
+                }
+              } else {
+                result.push({
+                  data: text_data,
+                  text_data: text_data,
+                  percentage: percentage,
+                  lineLength: 1
+                });
+              }
+              var maxLength = d3.max(result, function(d) {
+                return d.data.length;
+              });
+              result.forEach(function(d) {
+                d.MaxLength = maxLength;
+              });
+              return result;
+            }
+
   
             function switch_competitors() {
               if (CompetitorMode === 1) {
@@ -4046,7 +4686,7 @@
                       "#9368B7", "#9BC53D", "#122C34"]) */
 
                       var colorScale = d3.scaleOrdinal().domain(x.domain())
-                      .range(["#82ADBD"])
+                      .range(["#C1C1C1"])
 
                     var barX = d3.scaleBand()
                     .domain(fundHist.map(function(d) {
@@ -4159,7 +4799,7 @@
                   "#9368B7", "#9BC53D", "#122C34"]) */
 
                   var colorScale = d3.scaleOrdinal().domain(x.domain())
-                  .range(["#82ADBD"])
+                  .range(["#C1C1C1"])
 
                   var y = d3.scaleLinear()
                   .range([bar_height-50, 50])
@@ -4353,7 +4993,7 @@
                 .paddingInner(0.25);
 
                 var colorScale = d3.scaleOrdinal().domain(x.domain())
-                .range(["#82ADBD"])
+                .range(["#C1C1C1"])
 
                 var y = d3.scaleLinear()
                 .range([bar_height-50, 50])
@@ -4362,6 +5002,9 @@
                 var maxTicks = maxVal
                 if (maxVal > 30) {
                   maxTicks = maxVal / 2
+                  if (maxVal > 60) {
+                    maxTicks = maxVal / 4
+                  }
                 }
 
                 barSVG.append("g")
@@ -4412,6 +5055,42 @@
 
 
                 
+            }
+
+            function update_DB() {
+            var filterList = [{name: "Founded", filters: []}, 
+                {name: "Industry", filters: []},
+                {name: "Maturity", filters: []}]
+              filterList.forEach(function(u, i) {
+                d3.select(".db-filter-" + i)
+                  .selectAll(".checkmark").each(function() {
+                    if (d3.select(this).attr("class") === "checkmark unchecked") {
+                      u.filters.push(d3.select(this).node().parentNode.textContent.trim())
+                    }
+                  })
+
+              })
+              let numStartups = data.length
+              d3.select(".db-content")
+                .selectAll(".db-entry")
+                .style("display", function(d) {
+                  let show = "inline-block"
+                  filterList.forEach(function(v) {
+                    v.filters.forEach(function(w) {
+                      if (d[v.name] === w) {
+                        show = "none"
+                        
+                      }
+                    })
+                  })
+                  if (show === "none") {
+                    numStartups -= 1
+                  }
+                  return show
+                })
+
+              d3.select(".db-column-2-header").text("Showing: " + numStartups + " filtered startups")
+              
             }
   
             
@@ -4898,6 +5577,8 @@
                     x
                   );
                 });
+
+      
   
               var toolBox = chartSVG
                 .append("rect")
@@ -5166,7 +5847,7 @@
                     .append("path")
                     .classed("segment-band", true)
                     .attr("d", segmentLabelBandArc)
-                    .attr("fill", "#82ADBD")
+                    .attr("fill", "#C1C1C1")
   
                   var tmpLabels = tmp_chartSVG
                     .append("g")
@@ -5385,11 +6066,30 @@
                 d3.select(".popup-bg").style("display", "none")
                 d3.select(".svg-bar-container").html("")
             })
+
+            d3.select("#db-toggle-btn").on("click", function() {
+                d3.select("#db-toggle-btn").attr("class", "left-sidebar-btn active")
+                d3.select("#radar-toggle-btn").attr("class", "left-sidebar-btn")
+                d3.select("#map-toggle-btn").attr("class", "left-sidebar-btn")
+                //
+                d3.select("body").style("background-color", "#F4F4F4")
+                d3.select("#db-container").style("display", "block")
+                d3.select("#chart-container").style("display", "none")
+                d3.select("#key-container").style("display", "none")
+                d3.select("#control-container").style("display", "none")
+                d3.select("#hover-info-container").style("display", "none")
+                d3.select("#save-button-container").style("display", "none")
+                d3.select(".map-container").style("display", "none")
+                d3.select(".map-tooltip").style("display", "none");
+
+            })
   
             d3.select("#map-toggle-btn").on("click", function() {
                 d3.select("#map-toggle-btn").attr("class", "left-sidebar-btn active")
                 d3.select("#radar-toggle-btn").attr("class", "left-sidebar-btn")
+                d3.select("#db-toggle-btn").attr("class", "left-sidebar-btn")
                 d3.select("body").style("background-color", "#CBCBCB")
+                d3.select("#db-container").style("display", "none")
 
               toggle_map("on")
             })
@@ -5496,8 +6196,10 @@
                 element.insertBefore(styleElement, refNode);
               }
             }
-          });
+
         })
+
+            })
   
           })
         });
