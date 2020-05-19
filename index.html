@@ -238,7 +238,7 @@
       }
 
       #switch-button:hover {
-        background-color: #8ED1A1;
+        background-color: #132A54;
       }
 
       #switch-button-label {
@@ -312,7 +312,7 @@
 
       /* Change the background color of the dropdown button when the dropdown content is shown */
       .dropdown-industry:hover .dropbtn {
-        background-color: #8ED1A1;
+        background-color: #132A54;
       }
 
       .switch-button {
@@ -344,7 +344,7 @@
 
       #map-button:hover,
       #save-button:hover {
-        background-color: #8ED1A1;
+        background-color: #132A54;
       }
 
       .switch {
@@ -607,7 +607,7 @@
       }
 
       #chart-button:hover {
-        background-color: #8ED1A1;
+        background-color: #132A54;
       }
 
       .map-tooltip {
@@ -1087,7 +1087,7 @@
 
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown-bar-chart:hover .dropbtn-b {
-    background-color: #8ED1A1;
+    background-color: #132A54;
   }
 
   .svg-bar-container {
@@ -2130,11 +2130,11 @@ line-height: 1.4em;
   
               function country_hover(d, i) {
                 d3.selectAll(".country-circle")
-                  .attr("fill", "#C1C1C1")
-                  .attr("stroke", "#C1C1C1");
+                  .attr("fill", "#82ADBD")
+                  .attr("stroke", "#82ADBD");
                 d3.select(this)
-                  .attr("fill", "#8ED1A1")
-                  .attr("stroke", "#8ED1A1");
+                  .attr("fill", "#132A54")
+                  .attr("stroke", "#132A54");
                 var tooltip = "<div>" + d.properties.name + "<\/div>";
                 tooltip += "<div>Startups: " + d.properties.startups + "<\/div>";
                 d3.select(".map-tooltip")
@@ -2386,7 +2386,7 @@ line-height: 1.4em;
                     .append("path")
                     .classed("segment-band", true)
                     .attr("d", segmentLabelBandArc)
-                    .attr("fill", "#C1C1C1")
+                    .attr("fill", "#82ADBD")
                     .attr("id", function(d) {
                       return (
                         d.data.value.key.toLowerCase().replace(/ /g, "-") + "-tmp-band"
@@ -2809,8 +2809,8 @@ line-height: 1.4em;
                 .attr("cy", function(d, i) {
                   return leftCentroids[i][1];
                 })
-                .attr("fill", "#C1C1C1")
-                .attr("stroke", "#C1C1C1")
+                .attr("fill", "#82ADBD")
+                .attr("stroke", "#82ADBD")
                 .on("mouseover", country_hover)
                 .on("click", country_click)
   
@@ -3175,7 +3175,7 @@ line-height: 1.4em;
               .enter()
               .append("path")
               .attr("d", themeArc)
-              .attr("fill", "#8ED1A1")
+              .attr("fill", "#132A54")
               .style("stroke", "white")
               .style("stroke-width", "2px");*/
   
@@ -3201,7 +3201,7 @@ line-height: 1.4em;
               .enter()
               .append("path")
               .attr("d", themeArc)
-              .attr("fill", "#8ED1A1")
+              .attr("fill", "#132A54")
               .style("stroke", "white")
               .style("stroke-width", "2px")
               .each(function(d, i) {
@@ -3348,7 +3348,7 @@ line-height: 1.4em;
                   d.data.value.key.toLowerCase().replace(/ /g, "-") + "-band"
                 );
               })
-              .attr("fill", "#C1C1C1")
+              .attr("fill", "#82ADBD")
               .each(function(d, i) {
                 var firstArcSection = /(^.+?)L/;
                 var newArc = firstArcSection.exec(d3.select(this).attr("d"))[1];
@@ -4686,7 +4686,7 @@ line-height: 1.4em;
                       "#9368B7", "#9BC53D", "#122C34"]) */
 
                       var colorScale = d3.scaleOrdinal().domain(x.domain())
-                      .range(["#C1C1C1"])
+                      .range(["#82ADBD"])
 
                     var barX = d3.scaleBand()
                     .domain(fundHist.map(function(d) {
@@ -4799,7 +4799,7 @@ line-height: 1.4em;
                   "#9368B7", "#9BC53D", "#122C34"]) */
 
                   var colorScale = d3.scaleOrdinal().domain(x.domain())
-                  .range(["#C1C1C1"])
+                  .range(["#82ADBD"])
 
                   var y = d3.scaleLinear()
                   .range([bar_height-50, 50])
@@ -4993,7 +4993,7 @@ line-height: 1.4em;
                 .paddingInner(0.25);
 
                 var colorScale = d3.scaleOrdinal().domain(x.domain())
-                .range(["#C1C1C1"])
+                .range(["#82ADBD"])
 
                 var y = d3.scaleLinear()
                 .range([bar_height-50, 50])
@@ -5847,7 +5847,7 @@ line-height: 1.4em;
                     .append("path")
                     .classed("segment-band", true)
                     .attr("d", segmentLabelBandArc)
-                    .attr("fill", "#C1C1C1")
+                    .attr("fill", "#82ADBD")
   
                   var tmpLabels = tmp_chartSVG
                     .append("g")
